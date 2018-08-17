@@ -473,7 +473,14 @@ public class ConversationActivity extends AppCompatActivity {
             @Override
             public void onParticipantDisconnected(Room room, Participant participant) {
                 videoStatusTextView.setText("Participant disconnected");
+                
                 removeParticipant(participant);
+                if (room != null) {
+                    room.disconnect();
+					disconnectedFromOnDestroy = true;
+                }
+                //intializeUI();
+                finish();
             }
 
             @Override

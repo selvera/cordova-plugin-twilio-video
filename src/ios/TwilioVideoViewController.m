@@ -331,6 +331,9 @@
     }
     // [self logMessage:[NSString stringWithFormat:@"Room %@ participant %@ disconnected", room.name, participant.identity]];
     [self logMessage:@"Participant disconnected"];
+
+    [self.room disconnect];
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 #pragma mark - TVIParticipantDelegate
