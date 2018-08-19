@@ -41,7 +41,7 @@
         <hook type="after_prepare" src="hooks/after_plugin_install/hook-add-r-import.js" />
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="VideoConversationPlugin">
-                <param name="android-package" value="cordova-plugin-twilio-video.VideoConversationPlugin" />
+                <param name="android-package" value="com.coachcare.coachcareionic.VideoConversationPlugin" />
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
@@ -57,7 +57,7 @@
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity 
-                android:name="cordova-plugin-twilio-video.ConversationActivity"
+                android:name="com.coachcare.coachcareionic.ConversationActivity"
                 android:configChanges="orientation|screenSize" 
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             </activity>
