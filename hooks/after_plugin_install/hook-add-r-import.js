@@ -29,7 +29,7 @@ if (process.env.TARGET) {
           var packageName = configobj.installed_plugins["cordova-plugin-twilio-video"]["PACKAGE_NAME"];
           console.log("With the package name: "+packageName);
           console.log("Adding import for R.java");
-            replace_string_in_file(val,"package cordova-plugin-twilio-video;","package cordova-plugin-twilio-video;\n\nimport "+packageName+".R;");
+            replace_string_in_file(val,"package com.coachcare.coachcareionic;","package com.coachcare.coachcareionic;\n\nimport "+packageName+".R;");
 
         } else {
             console.log("No android platform found! :(");

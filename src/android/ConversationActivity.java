@@ -1,4 +1,4 @@
-package cordova-plugin-twilio-video;
+package com.coachcare.coachcareionic;
 
 
 import android.Manifest;
