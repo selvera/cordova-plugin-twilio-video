@@ -35,7 +35,14 @@
         <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
             <string>$MICROPHONE_USAGE_DESCRIPTION</string>
         </config-file>
-        
+        <framework src="AudioToolbox.framework" />
+        <framework src="VideoToolbox.framework" />
+        <framework src="AVFoundation.framework" />
+        <framework src="CoreTelephony.framework" />
+        <framework src="GLKit.framework" />
+        <framework src="CoreMedia.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="libc++.tbd" />
     </platform>
     <platform name="android">
         <hook type="after_prepare" src="hooks/after_plugin_install/hook-add-r-import.js" />
