@@ -35,6 +35,7 @@
         <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
             <string>$MICROPHONE_USAGE_DESCRIPTION</string>
         </config-file>
+        <framework src="src/frameworks/twilio/TwilioVideo.framework" custom="true" embed="true" />
         <framework src="AudioToolbox.framework" />
         <framework src="VideoToolbox.framework" />
         <framework src="AVFoundation.framework" />
