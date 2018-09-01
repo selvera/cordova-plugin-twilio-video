@@ -13,7 +13,8 @@
         <engine name="cordova" version=">=4.0.0" />
     </engines>
     <platform name="ios">
-        <hook src="hooks/download_twilio_framework/script.sh" type="before_prepare" />
+        <hook type="before_plugin_install" src="hooks/download_twilio_framework/script.sh" />
+        <hook type="after_plugin_install" src="hooks/remove_unsupported_archs/script.js" />
         <config-file parent="/*" target="config.xml">
             <feature name="VideoConversationPlugin">
                 <param name="ios-package" value="TwilioVideoPlugin" />
