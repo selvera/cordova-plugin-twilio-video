@@ -79,7 +79,7 @@
 
 #pragma mark - Public
 
-- (void)connectToRoom:(NSString*)room {
+- (void)connectToRoom:(NSString*)room asVideoCall:(BOOL)isVideo {
     [self showRoomUI:YES];
     
     if ([self.accessToken isEqualToString:@"TWILIO_ACCESS_TOKEN"]) {
