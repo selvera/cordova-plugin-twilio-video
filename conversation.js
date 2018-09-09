@@ -8,6 +8,15 @@ var conversations = {
       'startPhoneCall',
       [callTo,token]
     );
+  },
+  startVideoCall: function(callTo,token,succ,fail) {
+    exec(
+      succ || function(){},
+      fail || function(){},
+      'VideoConversationPlugin',
+      'startVideoCall',
+      [callTo,token]
+    );
   }
 };
 
