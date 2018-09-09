@@ -24,6 +24,7 @@ public class VideoConversationPlugin extends CordovaPlugin {
     private CordovaInterface cordova;
     private String roomId;
     private String token;
+    private String isVideo;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -34,29 +35,37 @@ public class VideoConversationPlugin extends CordovaPlugin {
 
     
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		this.callbackContext = callbackContext;
-		if (action.equals("open")) {
-		   	this.openRoom(args);
-		}
+        this.callbackContext = callbackContext;
+        switch(action){
+            case "startPhoneCall":
+                this.startCall(args, "false");
+                break;
+            case "startVideoCall":
+                this.startCall(args, "true");
+                break;
+        }
         return true;
 	}
 
-	public void openRoom(final JSONArray args) {
+	public void startCall(final JSONArray args, final String isVideo) {
         try {
             this.roomId = args.getString(0);
             this.token = args.getString(1);
+            this.isVideo = isVideo;
             final CordovaPlugin that = this;
             final String token = this.token;
             final String roomId = this.roomId;
 
             LOG.d("TOKEN", token);
             LOG.d("ROOMID", roomId);
+            LOG.d("ISVIDEO", isVideo);
      		cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
 
                     Intent intentTwilioVideo = new Intent(that.cordova.getActivity().getBaseContext(), ConversationActivity.class);
         			intentTwilioVideo.putExtra("token", token);
                     intentTwilioVideo.putExtra("roomId", roomId);
+                    intentTwilioVideo.putExtra("isVideo", isVideo);
                     // avoid calling other phonegap apps
                     //intentTwilioVideo.setPackage(that.cordova.getActivity().getApplicationContext().getPackageName());
                     //that.cordova.startActivityForResult(that, intentTwilioVideo);

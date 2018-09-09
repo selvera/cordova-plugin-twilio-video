@@ -1,11 +1,20 @@
 exec = require('cordova/exec');
 var conversations = {
-  open: function(callTo,token,succ,fail) {
+  startPhoneCall: function(callTo,token,succ,fail) {
     exec(
       succ || function(){},
       fail || function(){},
       'VideoConversationPlugin',
-      'open',
+      'startPhoneCall',
+      [callTo,token]
+    );
+  },
+  startVideoCall: function(callTo,token,succ,fail) {
+    exec(
+      succ || function(){},
+      fail || function(){},
+      'VideoConversationPlugin',
+      'startVideoCall',
       [callTo,token]
     );
   }

@@ -56,6 +56,7 @@ public class ConversationActivity extends AppCompatActivity {
      */
     private String accessToken;
     private String roomId;
+    private Boolean isVideo;
 
     /*
      * A Room represents communication between a local participant and one or more participants.
@@ -124,6 +125,7 @@ public class ConversationActivity extends AppCompatActivity {
 
         this.accessToken = intent.getStringExtra("token");
         this.roomId =   intent.getStringExtra("roomId");
+        this.isVideo = Boolean.parseBoolean(intent.getStringExtra("isVideo"));
 
         /*
          * Check camera and microphone permissions. Needed in Android M.
@@ -259,7 +261,7 @@ public class ConversationActivity extends AppCompatActivity {
 
         // Share your camera
         cameraCapturer = new CameraCapturer(this, CameraSource.FRONT_CAMERA);
-        localVideoTrack = LocalVideoTrack.create(this, true, cameraCapturer);
+        localVideoTrack = LocalVideoTrack.create(this, this.isVideo, cameraCapturer);
         primaryVideoView.setMirror(true);
         localVideoTrack.addRenderer(primaryVideoView);
         localVideoView = primaryVideoView;
