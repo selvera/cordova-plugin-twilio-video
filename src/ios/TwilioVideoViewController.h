@@ -9,7 +9,7 @@
 @interface TwilioVideoViewController : UIViewController
 
 @property (nonatomic, strong) NSString *accessToken;
-@property BOOL *isVideo;
+@property BOOL isVideo;
 
 - (void)connectToRoom:(NSString*)room asVideoCall:(BOOL) isVideo;
 

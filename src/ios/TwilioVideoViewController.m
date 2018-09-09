@@ -67,7 +67,9 @@
     
     
     // Preview our local camera track in the local video preview view.
-    [self startPreview];
+    if (self.isVideo){
+        [self startPreview];
+    }
     
     // Disconnect and mic button will be displayed when client is connected to a room.
     // self.disconnectButton.hidden = YES;
@@ -80,6 +82,7 @@
 #pragma mark - Public
 
 - (void)connectToRoom:(NSString*)room asVideoCall:(BOOL)isVideo {
+    self.isVideo = isVideo;
     [self showRoomUI:YES];
     
     if ([self.accessToken isEqualToString:@"TWILIO_ACCESS_TOKEN"]) {
@@ -195,7 +198,10 @@
         return;
     }
     // Prepare local media which we will share with Room Participants.
-    [self prepareLocalMedia];
+    if(self.isVideo){
+        [self prepareLocalMedia];
+    }
+    
     
     TVIConnectOptions *connectOptions = [TVIConnectOptions optionsWithToken:self.accessToken
                                                                       block:^(TVIConnectOptionsBuilder * _Nonnull builder) {
