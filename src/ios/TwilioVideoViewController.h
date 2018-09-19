@@ -5,11 +5,14 @@
 //
 
 @import UIKit;
+#import <Cordova/CDV.h>
 
 @interface TwilioVideoViewController : UIViewController
 
 @property (nonatomic, strong) NSString *accessToken;
 @property BOOL isVideo;
+@property (nonatomic, strong) id<CDVCommandDelegate> commandDelegate;
+@property (nonatomic, strong) NSString *successCallbackId;
 
 - (void)connectToRoom:(NSString*)room asVideoCall:(BOOL) isVideo;
 
