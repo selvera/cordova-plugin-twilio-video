@@ -67,9 +67,8 @@
     
     
     // Preview our local camera track in the local video preview view.
-    if (self.isVideo){
-        [self startPreview];
-    }
+    
+    [self startPreview];
     
     // Disconnect and mic button will be displayed when client is connected to a room.
     // self.disconnectButton.hidden = YES;
@@ -141,9 +140,6 @@
             self.videoButton.selected=true;
             self.videoButton.alpha = self.videoButton.selected ? 0.7 : 1;
         }
-    }    
-    else {
-        [self startPreview];
     }
 }
 
@@ -169,6 +165,10 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                               action:@selector(flipCamera)];
         [self.previewView addGestureRecognizer:tap];
+    }
+
+    if(!self.isVideo){
+        self.localVideoTrack.enabled = false;
     }
 }
 
@@ -205,9 +205,7 @@
         return;
     }
     // Prepare local media which we will share with Room Participants.
-    if(self.isVideo){
-        [self prepareLocalMedia];
-    }
+    [self prepareLocalMedia];
     
     
     TVIConnectOptions *connectOptions = [TVIConnectOptions optionsWithToken:self.accessToken
