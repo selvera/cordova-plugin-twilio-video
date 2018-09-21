@@ -141,6 +141,9 @@
             self.videoButton.selected=true;
             self.videoButton.alpha = self.videoButton.selected ? 0.7 : 1;
         }
+    }    
+    else {
+        [self startPreview];
     }
 }
 
