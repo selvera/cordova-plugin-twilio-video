@@ -89,6 +89,7 @@
         [self showRoomUI:NO];
     } else {
         [self doConnect:room];
+        self.localVideoTrack.enabled = self.isVideo;
     }
 }
 
