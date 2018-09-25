@@ -14,6 +14,6 @@
 @property (nonatomic, strong) id<CDVCommandDelegate> commandDelegate;
 @property (nonatomic, strong) NSString *successCallbackId;
 
-- (void)connectToRoom:(NSString*)room asVideoCall:(BOOL) isVideo;
+- (void)connectToRoom:(NSString*)room asVideoCall:(BOOL) isVideo withUser:(NSString*)user;
 
 @end
