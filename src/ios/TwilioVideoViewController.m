@@ -60,8 +60,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self logMessage:[NSString stringWithFormat:@"TwilioVideo v%@", [TwilioVideo version]]];
-    
     // Configure access token manually for testing, if desired! Create one manually in the console
     //  self.accessToken = @"TWILIO_ACCESS_TOKEN";
     
@@ -83,7 +81,6 @@
 - (void)connectToRoom:(NSString*)room asVideoCall:(BOOL)isVideo withUser:(NSString*)user{
     self.isVideo = isVideo;
     [self showRoomUI:YES];
-    self.messageLabel.text = user;
     if ([self.accessToken isEqualToString:@"TWILIO_ACCESS_TOKEN"]) {
         [self logMessage:[NSString stringWithFormat:@"Fetching an access token"]];
         [self showRoomUI:NO];
@@ -302,7 +299,8 @@
     // At the moment, this example only supports rendering one Participant at a time.
     
     // [self logMessage:[NSString stringWithFormat:@"Connected to room %@ as %@", room.name, room.localParticipant.identity]];
-    [self logMessage:@"Waiting on participant to join"];
+    NSString* message = [NSString stringWithFormat:@"Waiting on %@/ to join", self.user] 
+    [self logMessage:message];
     
     if (room.participants.count > 0) {
         self.participant = room.participants[0];
@@ -334,7 +332,7 @@
         self.participant.delegate = self;
     }
     //   [self logMessage:[NSString stringWithFormat:@"Room %@ participant %@ connected", room.name, participant.identity]];
-    [self logMessage:@" "];
+    [self logMessage:self.user];
 }
 
 - (void)room:(TVIRoom *)room participantDidDisconnect:(TVIParticipant *)participant {
@@ -342,7 +340,7 @@
         [self cleanupRemoteParticipant];
     }
     // [self logMessage:[NSString stringWithFormat:@"Room %@ participant %@ disconnected", room.name, participant.identity]];
-    [self logMessage:@"Participant disconnected"];
+    [self logMessage:[NSString stringWithFormat:@"Participant disconnected", self.user]];
 
     [self.room disconnect];
     [self dismissViewControllerAnimated:true completion:nil];
