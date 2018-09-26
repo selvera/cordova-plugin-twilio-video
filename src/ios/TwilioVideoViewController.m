@@ -300,7 +300,7 @@
     // At the moment, this example only supports rendering one Participant at a time.
     
     // [self logMessage:[NSString stringWithFormat:@"Connected to room %@ as %@", room.name, room.localParticipant.identity]];
-    NSString* message = [NSString stringWithFormat:@"Waiting on %@/ to join", self.user] 
+    NSString* message = [NSString stringWithFormat:@"Waiting on %@ to join", self.user];
     [self logMessage:message];
     
     if (room.participants.count > 0) {
