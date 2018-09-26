@@ -22,6 +22,7 @@ public class VideoConversationPlugin extends CordovaPlugin {
 
     public CallbackContext callbackContext;
     private CordovaInterface cordova;
+    private String user;
     private String roomId;
     private String token;
     private String isVideo;
@@ -49,12 +50,15 @@ public class VideoConversationPlugin extends CordovaPlugin {
 
 	public void startCall(final JSONArray args, final String isVideo) {
         try {
-            this.roomId = args.getString(0);
-            this.token = args.getString(1);
+            this.user = args.getString(0);
+            this.roomId = args.getString(1);
+            this.token = args.getString(2);
+
             this.isVideo = isVideo;
             final CordovaPlugin that = this;
             final String token = this.token;
             final String roomId = this.roomId;
+            final String user = this.user;
 
             LOG.d("TOKEN", token);
             LOG.d("ROOMID", roomId);
@@ -66,6 +70,7 @@ public class VideoConversationPlugin extends CordovaPlugin {
         			intentTwilioVideo.putExtra("token", token);
                     intentTwilioVideo.putExtra("roomId", roomId);
                     intentTwilioVideo.putExtra("isVideo", isVideo);
+                    intentTwilioVideo.putExtra("user", user);
                     // avoid calling other phonegap apps
                     //intentTwilioVideo.setPackage(that.cordova.getActivity().getApplicationContext().getPackageName());
                     //that.cordova.startActivityForResult(that, intentTwilioVideo);
