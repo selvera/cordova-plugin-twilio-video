@@ -10,8 +10,9 @@
 @implementation TwilioVideoPlugin
 
 - (void)startVideoCall:(CDVInvokedUrlCommand*)command {
-    NSString* room = command.arguments[0];
-    NSString* token = command.arguments[1];
+    NSString* user =  command.arguments[0];
+    NSString* room = command.arguments[1];
+    NSString* token = command.arguments[2];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"TwilioVideo" bundle:nil];
@@ -21,14 +22,15 @@
         vc.commandDelegate = self.commandDelegate;
         vc.successCallbackId = command.callbackId;
         [self.viewController presentViewController:vc animated:YES completion:^{
-            [vc connectToRoom:room asVideoCall:true];
+            [vc connectToRoom:room asVideoCall:true withUser:user];
         }];
     });
 }
 
 - (void)startPhoneCall:(CDVInvokedUrlCommand*)command {
-    NSString* room = command.arguments[0];
-    NSString* token = command.arguments[1];
+    NSString* user =  command.arguments[0];
+    NSString* room = command.arguments[1];
+    NSString* token = command.arguments[2];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"TwilioVideo" bundle:nil];
@@ -38,8 +40,7 @@
         vc.commandDelegate = self.commandDelegate;
         vc.successCallbackId = command.callbackId;
         [self.viewController presentViewController:vc animated:YES completion:^{
-            [vc connectToRoom:room asVideoCall:false];
-            
+            [vc connectToRoom:room asVideoCall:false withUser:user];
         }];
     });
 }

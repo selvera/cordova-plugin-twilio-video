@@ -54,6 +54,7 @@ public class ConversationActivity extends AppCompatActivity {
      * Access token used to connect. This field will be set either from the console generated token
      * or the request to the token server.
      */
+    private String user;
     private String accessToken;
     private String roomId;
     private Boolean isVideo;
@@ -123,9 +124,12 @@ public class ConversationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        this.user = intent.getStringExtra("user");
         this.accessToken = intent.getStringExtra("token");
         this.roomId =   intent.getStringExtra("roomId");
         this.isVideo = Boolean.parseBoolean(intent.getStringExtra("isVideo"));
+
+        identityTextView.setText(this.user);
 
         /*
          * Check camera and microphone permissions. Needed in Android M.

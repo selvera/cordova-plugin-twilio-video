@@ -80,10 +80,10 @@
 
 #pragma mark - Public
 
-- (void)connectToRoom:(NSString*)room asVideoCall:(BOOL)isVideo {
+- (void)connectToRoom:(NSString*)room asVideoCall:(BOOL)isVideo withUser:(NSString*)user{
     self.isVideo = isVideo;
     [self showRoomUI:YES];
-    
+    self.messageLabel.text = user;
     if ([self.accessToken isEqualToString:@"TWILIO_ACCESS_TOKEN"]) {
         [self logMessage:[NSString stringWithFormat:@"Fetching an access token"]];
         [self showRoomUI:NO];
