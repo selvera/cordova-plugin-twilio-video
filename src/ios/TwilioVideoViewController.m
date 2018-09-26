@@ -80,6 +80,7 @@
 
 - (void)connectToRoom:(NSString*)room asVideoCall:(BOOL)isVideo withUser:(NSString*)user{
     self.isVideo = isVideo;
+    self.user = user;
     [self showRoomUI:YES];
     if ([self.accessToken isEqualToString:@"TWILIO_ACCESS_TOKEN"]) {
         [self logMessage:[NSString stringWithFormat:@"Fetching an access token"]];
