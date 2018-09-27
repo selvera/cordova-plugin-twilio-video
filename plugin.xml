@@ -14,6 +14,7 @@
     </engines>
     <platform name="ios">
         <hook type="before_plugin_install" src="hooks/download_twilio_framework/script.sh" />
+        <hook type="after_plugin_install" src="hooks/remove_unsupported_archs/script.js" />
         <hook type="after_plugin_install" src="hooks/embed_twilio_framework/script.js" />
         <hook type="before_build" src="hooks/embed_twilio_framework/script.js" />
         <config-file parent="/*" target="config.xml">
