@@ -343,6 +343,9 @@
     // [self logMessage:[NSString stringWithFormat:@"Room %@ participant %@ disconnected", room.name, participant.identity]];
     [self logMessage:[NSString stringWithFormat:@"Participant disconnected", self.user]];
 
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.successCallbackId];
+    
     [self.room disconnect];
     [self dismissViewControllerAnimated:true completion:nil];
 }
