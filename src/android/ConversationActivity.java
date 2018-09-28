@@ -581,6 +581,7 @@ public class ConversationActivity extends AppCompatActivity {
 					disconnectedFromOnDestroy = true;
                 }
                 //intializeUI();
+                setResult(1);
                 finish();
             }
         };
