@@ -69,7 +69,8 @@
             <activity 
                 android:name="com.coachcare.coachcareionic.ConversationActivity"
                 android:configChanges="orientation|screenSize" 
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                android:launchMode="singleTop">
             </activity>
         </config-file>
         <source-file src="src/android/VideoConversationPlugin.java" target-dir="src/com/ekreative/cordova/videoconversations" />
