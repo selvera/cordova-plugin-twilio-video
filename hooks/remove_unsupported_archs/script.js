@@ -1,53 +1,75 @@
 'use strict';
 
-const xcode = require('xcode'),
-    fs = require('fs'),
-    path = require('path');
 
-module.exports = function(context) {
-    if(process.length >=5 && process.argv[1].indexOf('cordova') == -1) {
-        if(process.argv[4] != 'ios') {
+
+// This hook expects that the framework dependency is defined on plugin.xml.
+// Example: 
+// <platform name="ios">
+//     <!-- .... -->
+//     <framework src="path/to/FRAMEWORK_NAME.framework" custom="true" embed="true" />
+// </platform>
+// For the OutSystems platform it is better to add this hook on both events. As so:
+// <platform name="ios">
+//     <!-- .... -->
+//     <hook type="after_plugin_install" src="path/to/thishook/embed_framework_hook.js" />
+//     <hook type="before_build" src="path/to/thishook/embed_framework_hook.js" />
+// </platform>
+
+module.exports = function (ctx) {
+
+    // IMPORTANT!!
+    // Replace the following var with the correct name of the .framework file to be embed
+    var frameworkName = "TwilioVideo.framework"
+
+    var fs = ctx.requireCordovaModule("fs");
+    var path = ctx.requireCordovaModule("path");
+    var xcode = ctx.requireCordovaModule("xcode");
+    var deferral = ctx.requireCordovaModule('q').defer();
+
+    /**
+     * Recursively search for file with the tiven filter starting on startPath
+     */
+    function searchRecursiveFromPath(startPath, filter, rec, multiple) {
+        if (!fs.existsSync(startPath)) {
+            console.log("no dir ", startPath);
+            return;
+        }
+
+        var files = fs.readdirSync(startPath);
+        var resultFiles = []
+        for (var i = 0; i < files.length; i++) {
+            var filename = path.join(startPath, files[i]);
+            var stat = fs.lstatSync(filename);
+            if (stat.isDirectory() && rec) {
+                fromDir(filename, filter); //recurse
+            }
+
+            if (filename.indexOf(filter) >= 0) {
+                if (multiple) {
+                    resultFiles.push(filename);
+                } else {
+                    return filename;
+                }
+            }
+        }
+        if (multiple) {
+            return resultFiles;
+        }
+    }
+
+    if (process.length >= 5 && process.argv[1].indexOf('cordova') == -1) {
+        if (process.argv[4] != 'ios') {
             return; // plugin only meant to work for ios platform.
         }
     }
 
-    function fromDir(startPath,filter, rec, multiple){
-      if (!fs.existsSync(startPath)){
-          console.log("no dir ", startPath);
-          return;
-      }
+    var xcodeProjPath = searchRecursiveFromPath('platforms/ios', '.xcodeproj', false);
+    var projectPath = xcodeProjPath + '/project.pbxproj';
+    console.log("Found", projectPath);
 
-      const files=fs.readdirSync(startPath);
-      var resultFiles = []
-      for(var i=0;i<files.length;i++){
-          var filename=path.join(startPath,files[i]);
-          var stat = fs.lstatSync(filename);
-          if (stat.isDirectory() && rec){
-              fromDir(filename,filter); //recurse
-          }
+    var proj = xcode.project(projectPath);
+    proj.parseSync();
 
-          if (filename.indexOf(filter)>=0) {
-              if (multiple) {
-                  resultFiles.push(filename);
-              } else {
-                  return filename;
-              }
-          }
-      }
-      if(multiple) {
-          return resultFiles;
-      }
-    }
-
-    const xcodeProjPath = fromDir('platforms/ios','.xcodeproj', false);
-    const projectPath = xcodeProjPath + '/project.pbxproj';
-    const myProj = xcode.project(projectPath);
-
-    myProj.parseSync();
-
-    // unquote (remove trailing ")
-    var projectName = myProj.getFirstTarget().firstTarget.name.substr(1);
-    projectName = projectName.substr(0, projectName.length-1); //Removing the char " at beginning and the end.
 
     var options = {};
     options['shellPath'] = '/bin/sh';
@@ -74,9 +96,20 @@ rm "$FRAMEWORK_EXECUTABLE_PATH"
 mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
 done`;
 
-    var buildPhase = myProj.addBuildPhase([], 'PBXShellScriptBuildPhase', 'Trim Twilio framework', myProj.getFirstTarget().uuid, options).buildPhase;
-    buildPhase['runOnlyForDeploymentPostprocessing'] = 0;
+    // If the build phase doesn't exist, add it
+    if (proj.pbxEmbedFrameworksBuildPhaseObj(proj.getFirstTarget().uuid) == undefined) {
+        console.log("BuildPhase not found in XCode project. Adding PBXCopyFilesBuildPhase - TRIM Frameworks");
+        proj.addBuildPhase([], 'PBXCopyFilesBuildPhase', "Trim Twilio framework", proj.getFirstTarget().uuid, options);
+    }
 
-    fs.writeFileSync(projectPath, myProj.writeSync());
-    console.log('Added Arch Trim run script build phase');
+    fs.writeFile(proj.filepath, proj.writeSync(), 'utf8', function (err) {
+        if (err) {
+            deferral.reject(err);
+            return;
+        }
+        console.log("finished writing xcodeproj - Trim Twilio framework");
+        deferral.resolve();
+    });
+
+    return deferral.promise;
 };
