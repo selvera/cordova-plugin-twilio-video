@@ -75,6 +75,7 @@ public class VideoConversationPlugin extends CordovaPlugin {
                     //intentTwilioVideo.setPackage(that.cordova.getActivity().getApplicationContext().getPackageName());
                     //that.cordova.startActivityForResult(that, intentTwilioVideo);
                     //that.cordova.getActivity().startActivity(intentTwilioVideo);
+                    that.cordova.setActivityResultCallback(that);
                     that.cordova.startActivityForResult(that, intentTwilioVideo, 0);
                 }
                     
@@ -92,7 +93,13 @@ public class VideoConversationPlugin extends CordovaPlugin {
         return state;
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        final PluginResult result = new PluginResult(PluginResult.Status.OK);
+        this.callbackContext.sendPluginResult(result);
+    }
+
     public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {
+        LOG.i("TV", "-----  result from twilio video *****  ");
         this.token = state.getString("token");
         this.roomId = state.getString("roomId");
         this.callbackContext = callbackContext;
