@@ -485,7 +485,7 @@ public class ConversationActivity extends AppCompatActivity {
                     room.disconnect();
 					disconnectedFromOnDestroy = true;
                 }
-                this.setResult(1);
+                setResult(1);
                 //intializeUI();
                 finish();
             }
