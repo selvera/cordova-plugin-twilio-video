@@ -485,6 +485,7 @@ public class ConversationActivity extends AppCompatActivity {
                     room.disconnect();
 					disconnectedFromOnDestroy = true;
                 }
+                setResult(1);
                 //intializeUI();
                 finish();
             }
@@ -580,6 +581,7 @@ public class ConversationActivity extends AppCompatActivity {
 					disconnectedFromOnDestroy = true;
                 }
                 //intializeUI();
+                setResult(1);
                 finish();
             }
         };
