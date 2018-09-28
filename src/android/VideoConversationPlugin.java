@@ -94,7 +94,8 @@ public class VideoConversationPlugin extends CordovaPlugin {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        LOG.i("TV", "*****  result from twilio video" + requestCode + " *****  " + resultCode);
+        final PluginResult result = new PluginResult(PluginResult.Status.OK);
+        this.callbackContext.sendPluginResult(result);
     }
 
     public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {
