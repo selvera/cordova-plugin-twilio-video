@@ -99,7 +99,14 @@ done`;
     // If the build phase doesn't exist, add it
     if (proj.pbxEmbedFrameworksBuildPhaseObj(proj.getFirstTarget().uuid) == undefined) {
         console.log("BuildPhase not found in XCode project. Adding PBXCopyFilesBuildPhase - TRIM Frameworks");
-        proj.addBuildPhase([], 'PBXCopyFilesBuildPhase', "Trim Twilio framework", proj.getFirstTarget().uuid, options);
+        proj.addBuildPhase([], 'PBXCopyFilesBuildPhase', "Trim Twilio framework 1", proj.getFirstTarget().uuid, options);
+    } else {
+        console.log('inn here');
+            var buildPhase = proj.addBuildPhase([], 'PBXShellScriptBuildPhase', 'Trim Twilio framework 2', myProj.getFirstTarget().uuid, options).buildPhase;
+            buildPhase['runOnlyForDeploymentPostprocessing'] = 0;
+
+        
+        console.log('Added Arch Trim run script build phase');
     }
 
     fs.writeFile(proj.filepath, proj.writeSync(), 'utf8', function (err) {
