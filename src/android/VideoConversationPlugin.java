@@ -94,8 +94,10 @@ public class VideoConversationPlugin extends CordovaPlugin {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        final PluginResult result = new PluginResult(PluginResult.Status.OK);
-        this.callbackContext.sendPluginResult(result);
+        if(resultCode == 1){
+            final PluginResult result = new PluginResult(PluginResult.Status.OK);
+            this.callbackContext.sendPluginResult(result);
+        }
     }
 
     public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {

@@ -220,6 +220,7 @@ public class ConversationActivity extends AppCompatActivity {
             room.disconnect();
             disconnectedFromOnDestroy = true;
         }
+        this.setResult
 
         /*
          * Release the local audio and video tracks ensuring any memory allocated to audio
