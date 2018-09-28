@@ -50,7 +50,6 @@
         <framework src="libc++.tbd" />
     </platform>
     <platform name="android">
-        <preference name="AndroidLaunchMode" value="singleTop" />
         <hook type="after_prepare" src="hooks/after_plugin_install/hook-add-r-import.js" />
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="VideoConversationPlugin">
