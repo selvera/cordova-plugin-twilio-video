@@ -103,6 +103,7 @@ done`;
     }
 
     fs.writeFile(proj.filepath, proj.writeSync(), 'utf8', function (err) {
+        console.log("does it hit here?");
         if (err) {
             console.log("Trim Twilio framework", err);
             deferral.reject(err);
