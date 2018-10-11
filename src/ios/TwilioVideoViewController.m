@@ -72,8 +72,6 @@
     // self.disconnectButton.hidden = YES;
     // self.micButton.hidden = YES;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
 }
 
 #pragma mark - Public
