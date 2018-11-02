@@ -245,18 +245,23 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void requestPermissionForCameraAndMicrophone(){
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) ||
-                ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.RECORD_AUDIO)) {
-            Toast.makeText(this,
-                    R.string.permissions_needed,
-                    Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO},
-                    CAMERA_MIC_PERMISSION_REQUEST_CODE);
-        }
+        ActivityCompat.requestPermissions(
+            this,
+            new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO},
+            CAMERA_MIC_PERMISSION_REQUEST_CODE);
+        // remove rationale
+        // if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) ||
+        //         ActivityCompat.shouldShowRequestPermissionRationale(this,
+        //                 Manifest.permission.RECORD_AUDIO)) {
+        //     Toast.makeText(this,
+        //             R.string.permissions_needed,
+        //             Toast.LENGTH_LONG).show();
+        // } else {
+        //      ActivityCompat.requestPermissions(
+        //         this,
+        //         new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO},
+        //         CAMERA_MIC_PERMISSION_REQUEST_CODE);
+        // }
     }
 
     private void createAudioAndVideoTracks() {
@@ -280,6 +285,10 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void connectToRoom(String roomName) {
+        MediaCodecVideoEncoder.disableVp8HwCodec();
+        MediaCodecVideoEncoder.disableVp9HwCodec();
+        MediaCodecVideoDecoder.disableVp8HwCodec();
+        MediaCodecVideoDecoder.disableVp9HwCodec();
         configureAudio(true);
         ConnectOptions.Builder connectOptionsBuilder = new ConnectOptions.Builder(accessToken)
                 .roomName(roomName);

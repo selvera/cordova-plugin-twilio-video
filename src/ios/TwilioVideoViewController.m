@@ -63,14 +63,8 @@
     // Configure access token manually for testing, if desired! Create one manually in the console
     //  self.accessToken = @"TWILIO_ACCESS_TOKEN";
     
-    
     // Preview our local camera track in the local video preview view.
-    
     [self startPreview];
-    
-    // Disconnect and mic button will be displayed when client is connected to a room.
-    // self.disconnectButton.hidden = YES;
-    // self.micButton.hidden = YES;
     
 }
 
