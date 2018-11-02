@@ -285,10 +285,6 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void connectToRoom(String roomName) {
-        MediaCodecVideoEncoder.disableVp8HwCodec();
-        MediaCodecVideoEncoder.disableVp9HwCodec();
-        MediaCodecVideoDecoder.disableVp8HwCodec();
-        MediaCodecVideoDecoder.disableVp9HwCodec();
         configureAudio(true);
         ConnectOptions.Builder connectOptionsBuilder = new ConnectOptions.Builder(accessToken)
                 .roomName(roomName);
